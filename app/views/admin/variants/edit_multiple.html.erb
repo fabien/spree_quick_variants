@@ -2,7 +2,7 @@
 
 <%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Variants"} %>
 
-<% form_tag :controller => 'admin/variants', :action => 'update_multiple' do %>
+<%= form_tag :controller => 'admin/variants', :action => 'update_multiple' do %>
 <table class="index">
   <tr>
     <th width="40%"><%= t("options") %></th>
