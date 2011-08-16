@@ -7,6 +7,10 @@
   <tr>
     <th width="40%"><%= t("options") %></th>
     <th width="20%"><%= t("price") %></th>
+    <th width="20%"><%= t("cost_price") %></th>
+    <% if Variant.column_names.include?('pre_discount_price') %>
+    <th width="20%"><%= t("pre_discount_price") %></th>
+    <% end %>
     <th width="20%"><%= t("sku") %></th>
     <th width="5%"><%= t("on_hand") %></th>
   </tr>
@@ -15,7 +19,11 @@
     <% next if variant.option_values.empty? %>
     <tr id="<%= dom_id(variant) %>" <%= 'style="color:red;"' if variant.deleted? %>>
       <td width="40%"><%= variant_options variant %></td>
-      <td width="20%"><%= text_field_tag "variants[#{variant.id}][price]", variant.price, :size => 5 %></td>
+      <td width="10%"><%= text_field_tag "variants[#{variant.id}][price]", variant.price, :size => 5 %></td>
+      <td width="10%"><%= text_field_tag "variants[#{variant.id}][cost_price]", variant.cost_price, :size => 5 %></td>
+      <% if Variant.column_names.include?('pre_discount_price') %>
+      <td width="10%"><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", variant.pre_discount_price, :size => 5 %></td>
+      <% end %>
       <td width="20%"><%= text_field_tag "variants[#{variant.id}][sku]", variant.sku, :size => 24 %></td>
       <td width="5%"><%= text_field_tag "variants[#{variant.id}][on_hand]", variant.on_hand, :size => 3 %></td>
     </tr>
