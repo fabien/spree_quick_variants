@@ -20,10 +20,10 @@
     <% next if variant.option_values.empty? %>
     <tr id="<%= dom_id(variant) %>" <%= 'style="color:red;"' if variant.deleted? %>>
       <td><%= variant_options variant %></td>
-      <td><%= text_field_tag "variants[#{variant.id}][price]", variant.price, :size => 5 %></td>
-      <td><%= text_field_tag "variants[#{variant.id}][cost_price]", variant.cost_price, :size => 5 %></td>
+      <td><%= text_field_tag "variants[#{variant.id}][price]", number_with_precision(variant.price, :precision => 2), :size => 5 %></td>
+      <td><%= text_field_tag "variants[#{variant.id}][cost_price]", number_with_precision(variant.cost_price, :precision => 2), :size => 5 %></td>
       <% if Variant.column_names.include?('pre_discount_price') %>
-      <td><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", variant.pre_discount_price, :size => 5 %></td>
+      <td><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", number_with_precision(variant.pre_discount_price, :precision => 2), :size => 5 %></td>
       <% end %>
       <td><%= text_field_tag "variants[#{variant.id}][sku]", variant.sku, :size => 24 %></td>
       <td><%= text_field_tag "variants[#{variant.id}][on_hand]", variant.on_hand, :size => 3 %></td>
