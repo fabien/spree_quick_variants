@@ -1,5 +1,4 @@
 require 'spree_core'
-require 'spree_quick_variants_hooks'
 
 module SpreeQuickVariants
   class Engine < Rails::Engine
