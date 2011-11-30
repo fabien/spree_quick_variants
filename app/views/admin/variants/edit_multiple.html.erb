@@ -3,40 +3,50 @@
 <%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Variants"} %>
 
 <%= form_tag :controller => 'admin/variants', :action => 'update_multiple' do %>
-<table class="index">
+<table id="edit-multiple-variants" class="index">
+  <thead>
   <tr>
-    <th><%= t("options") %></th>
-    <th><%= t("price") %></th>
-    <th><%= t("cost_price") %></th>
+    <th class="options"><%= t("options") %></th>
+    <th class="price"><%= t("price") %></th>
+    <th class="const_price"><%= t("cost_price") %></th>
     <% if Variant.column_names.include?('pre_discount_price') %>
-    <th><%= t("pre_discount_price") %></th>
+    <th class="pre_discount_price"><%= t("pre_discount_price") %></th>
     <% end %>
-    <th><%= t("sku") %></th>
-    <th><%= t("on_hand") %></th>
-    <th><%= t("action") %></th>
+    <% if Variant.column_names.include?('is_filterable') %>
+    <th class="is_filterable"><%= t("is_filterable") %></th>
+    <% end %>
+    <th class="sku"><%= t("sku") %></th>
+    <th class="on_hand"><%= t("on_hand") %></th>
+    <th class="actions"><%= t("action") %></th>
   </tr>
+  </thead>
+  <tbody>
   <% @collection.each do |variant| %>
     <!-- you can skip variant with no options: that's just the default variant that all products have -->
     <% next if variant.option_values.empty? %>
     <tr id="<%= dom_id(variant) %>" <%= 'style="color:red;"' if variant.deleted? %>>
-      <td><%= variant_options variant %></td>
-      <td><%= text_field_tag "variants[#{variant.id}][price]", number_with_precision(variant.price, :precision => 2), :size => 5 %></td>
-      <td><%= text_field_tag "variants[#{variant.id}][cost_price]", number_with_precision(variant.cost_price, :precision => 2), :size => 5 %></td>
+      <td class="options"><%= variant_options variant %></td>
+      <td class="price"><%= text_field_tag "variants[#{variant.id}][price]", number_with_precision(variant.price, :precision => 2), :size => 5 %></td>
+      <td class="const_price"><%= text_field_tag "variants[#{variant.id}][cost_price]", number_with_precision(variant.cost_price, :precision => 2), :size => 5 %></td>
       <% if Variant.column_names.include?('pre_discount_price') %>
-      <td><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", number_with_precision(variant.pre_discount_price, :precision => 2), :size => 5 %></td>
+      <td class="pre_discount_price"><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", number_with_precision(variant.pre_discount_price, :precision => 2), :size => 5 %></td>
       <% end %>
-      <td><%= text_field_tag "variants[#{variant.id}][sku]", variant.sku, :size => 24 %></td>
-      <td><%= text_field_tag "variants[#{variant.id}][on_hand]", variant.on_hand, :size => 3 %></td>
-      <td valign="top">
+      <% if Variant.column_names.include?('is_filterable') %>
+      <td class="is_filterable">
+      <%= hidden_field_tag "variants[#{variant.id}][is_filterable]", "0" %>
+      <%= check_box_tag "variants[#{variant.id}][is_filterable]", "1", variant.is_filterable? %>
+      </td>
+      <% end %>
+      <td class="sku"><%= text_field_tag "variants[#{variant.id}][sku]", variant.sku, :size => 12 %></td>
+      <td class="on_hand"><%= text_field_tag "variants[#{variant.id}][on_hand]", variant.on_hand, :size => 3 %></td>
+      <td class="actions" valign="top">
         <%= link_to_edit(variant) unless variant.deleted? %>
         &nbsp;
         <%= link_to_delete(variant) unless variant.deleted? %>
       </td>
     </tr>
   <% end %>
-  <% unless @product.has_variants? %>
-    <tr><td colspan="4"><%= t("none") %></td></tr>
-  <% end %>
+  </tbody>
 </table>
 <%= render :partial => 'admin/shared/edit_resource_links' %>
 <% end %>
