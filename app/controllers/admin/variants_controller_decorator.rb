@@ -1,4 +1,4 @@
-Admin::VariantsController.class_eval do
+Spree::Admin::VariantsController.class_eval do
   
   def edit_multiple
     respond_with(collection) do |format|

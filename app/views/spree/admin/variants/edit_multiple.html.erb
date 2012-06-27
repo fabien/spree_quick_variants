@@ -1,18 +1,18 @@
-<%= render :partial => 'admin/shared/product_sub_menu' %>
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
 
-<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Variants"} %>
+<%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => "Variants"} %>
 
-<%= form_tag :controller => 'admin/variants', :action => 'update_multiple' do %>
+<%= form_tag :controller => 'spree/admin/variants', :action => 'update_multiple' do %>
 <table id="edit-multiple-variants" class="index">
   <thead>
   <tr>
     <th class="options"><%= t("options") %></th>
     <th class="price"><%= t("price") %></th>
     <th class="const_price"><%= t("cost_price") %></th>
-    <% if Variant.column_names.include?('pre_discount_price') %>
+    <% if Spree::Variant.column_names.include?('pre_discount_price') %>
     <th class="pre_discount_price"><%= t("pre_discount_price") %></th>
     <% end %>
-    <% if Variant.column_names.include?('is_filterable') %>
+    <% if Spree::Variant.column_names.include?('is_filterable') %>
     <th class="is_filterable"><%= t("is_filterable") %></th>
     <% end %>
     <th class="sku"><%= t("sku") %></th>
@@ -28,10 +28,10 @@
       <td class="options"><%= variant_options variant %></td>
       <td class="price"><%= text_field_tag "variants[#{variant.id}][price]", number_with_precision(variant.price, :precision => 2), :size => 5 %></td>
       <td class="const_price"><%= text_field_tag "variants[#{variant.id}][cost_price]", number_with_precision(variant.cost_price, :precision => 2), :size => 5 %></td>
-      <% if Variant.column_names.include?('pre_discount_price') %>
+      <% if Spree::Variant.column_names.include?('pre_discount_price') %>
       <td class="pre_discount_price"><%= text_field_tag "variants[#{variant.id}][pre_discount_price]", number_with_precision(variant.pre_discount_price, :precision => 2), :size => 5 %></td>
       <% end %>
-      <% if Variant.column_names.include?('is_filterable') %>
+      <% if Spree::Variant.column_names.include?('is_filterable') %>
       <td class="is_filterable">
       <%= hidden_field_tag "variants[#{variant.id}][is_filterable]", "0" %>
       <%= check_box_tag "variants[#{variant.id}][is_filterable]", "1", variant.is_filterable? %>
@@ -48,7 +48,7 @@
   <% end %>
   </tbody>
 </table>
-<%= render :partial => 'admin/shared/edit_resource_links' %>
+<%= render :partial => 'spree/admin/shared/edit_resource_links' %>
 <% end %>
 
 <% if @product.options.empty? %>
